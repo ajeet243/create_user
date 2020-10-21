@@ -22,7 +22,7 @@ export class UserlistComponent implements OnInit {
   //               {name:'basu', id:3, phone:433544555,address:'mumbai'},
   //               {name:'jeevan', id:4, phone:67676686786,address:'kolkata'}
               // ]
-  displayedColumns=['id','first_name', 'email', 'details','Action']
+  displayedColumns=['id','first_name', 'email', 'details','Edit', 'Action']
 
   // public dataSource=this.usr_list;
    dataSource: MatTableDataSource<any>;;
@@ -83,20 +83,12 @@ export class UserlistComponent implements OnInit {
   }
   
   // delete a row
-  delete_user(row1){
+  delete_user(){
 
-    this.usr_list.get('id').setValue(row1.id);
-    var delid=row1.id;
-    
-    var i=0;
-    this.usr_list.forEach(x=>{
-      if(x.id==delid){
-        console.log("deleted index : " + i);
-        this.usr_list.splice(i,1);
-        this.usr_list;
-        this._toastr.success('row is deleted successfully', 'success!');
-      };
-      i++;
+    this._service.delete_user().subscribe(data=>{
+      console.log(data)
+      this.delete_user=data.data;
+      console.log(this.delete_user)
     })
   }
 

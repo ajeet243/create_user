@@ -28,12 +28,11 @@ export class UserComponent implements OnInit {
         this.userform.get('email').hasError('alreadyInUse') ? 'This emailaddress is already in use' : '';
   }
 
- 
-
 
   constructor(private _service:MyServiceService,private toastr: ToastrService, private router:Router,private route:ActivatedRoute) {
 
-    var id=this.route.snapshot.queryParams.id;
+    var id=this.route.snapshot.paramMap.get('id');
+    console.log(id)
     if(id){
       this.type='Edit';
       this.editForm(id);
@@ -58,18 +57,23 @@ export class UserComponent implements OnInit {
     
   }
  
-  editForm(_id)
-  {
+  editForm(_id){
+    console.log('inside editForm')
     this._service.single_user(_id).subscribe(data=>{
       console.log(data);
-      this.userform.get('id').setValue(data.id);
-      this.userform.get('firstname').setValue(data.firstname);
-      this.userform.get('lastname').setValue(_id.lastname);
-      this.userform.get('username').setValue(_id.username);
-      this.userform.get('phone').setValue(_id.phone);
-      this.userform.get('email').setValue(_id.email);
-      this.userform.get('address').setValue(_id.address);
-      this.userform.get('pincode').setValue(_id.pincode);
+      console.log(data.data)
+      console.log(data.data.avatar)
+
+      console.log(data.ad)
+      console.log(data.avatar)
+      // this.userform.get('id').setValue(data.data.id);
+      this.userform.get('firstName').setValue(data.data.first_name);
+      this.userform.get('lastName').setValue(data.data.last_name);
+      // this.userform.get('avatar').setValue(data.data.avatar);
+      // this.userform.get('phone').setValue(data.phone);
+      this.userform.get('email').setValue(data.data.email);
+      // this.userform.get('address').setValue(data.address);
+      // this.userform.get('pincode').setValue(data.pincode);
 
     })
   }
